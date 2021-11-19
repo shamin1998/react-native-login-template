@@ -14,7 +14,66 @@ import { passwordValidator } from '../helpers/passwordValidator'
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [token, setToken] = useState('')
+  const [type, setType] = useState('')
+  const [name, setName] = useState('')
+  const [valid, setValid] = useState('')
+  const [complaint, setComplaint] = useState('')
 
+  const fetchApiCall = async() => {
+    try {
+      const response = await fetch("https://csjitsi.iitkgp.ac.in/api/user/login", {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "username" : email.value,
+          "password" : password.value
+        })
+      });
+      // const status = await response.status;
+      const json = await response.json();
+      // setValid(status);
+      // if (valid == 200) {
+      setToken(json.jwtToken);
+      setType(json.type);
+      setName(json.name);
+      // }
+      
+    } catch (error) {
+      console.error(error);
+    }
+    
+    // try {
+    //   const response = await fetch("https://csjitsi.iitkgp.ac.in/api/patient/get-details", {
+    //     method: 'GET',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
+    //       'Authorization' : 'Bearer '+JSON.stringify(token),
+    //     }
+        
+    //   });
+    //   // const status = await response.status;
+    //   const complaintjson = await response.json();
+    //   // setValid(status);
+    //   // if (valid == 200) {
+    //   setComplaint(complaintjson.chief-complaints);
+      
+    //   // }
+      
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    // navigation.navigate('Dashboard',  {Token:token,Type:type,Name:name})
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: 'Dashboard' }],
+    //})
+  }
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -31,7 +90,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
+      {/* <BackButton goBack={navigation.goBack} /> */}
       <Logo />
       <Header>Welcome back.</Header>
       <TextInput
@@ -62,7 +121,7 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={onLoginPressed}>
+      <Button mode="contained" onPress={fetchApiCall}>
         Login
       </Button>
       <View style={styles.row}>
@@ -70,6 +129,13 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
+      </View>
+      <View>
+        {/* <Text>{valid}</Text> */}
+        <Text>{token}</Text>
+        <Text>{complaint}</Text>
+        {/* <Text>{type}</Text>
+        <Text>{name}</Text> */}
       </View>
     </Background>
   )

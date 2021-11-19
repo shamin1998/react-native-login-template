@@ -5,14 +5,14 @@ import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
 
-export default function Dashboard({ navigation }) {
+export default function Dashboard({ route, navigation }) {
+  const { token, type, name } = route.params;
   return (
     <Background>
       <Logo />
       <Header>Let’s start</Header>
       <Paragraph>
-        Your amazing app starts here. Open you favorite code editor and start
-        editing this project.
+        itemId: {token}
       </Paragraph>
       <Button
         mode="outlined"
