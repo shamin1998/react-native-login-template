@@ -6,7 +6,18 @@ import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
 
 export default function Dashboard({ route, navigation }) {
-  const { token, type, name } = route.params;
+  // this is a concept called Destructuring
+  // use same names by which values are sent
+  const { token, type, name } = route.params
+
+  // if you want to use different names make new variables
+  const newToken = route.params.token
+  const newType = route.params.type
+  const newName = route.params.name
+
+  console.warn(token)
+  console.warn(type)
+  console.warn(name)
   return (
     <Background>
       <Logo />

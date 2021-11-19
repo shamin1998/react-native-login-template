@@ -40,6 +40,14 @@ export default function LoginScreen({ navigation }) {
       setToken(json.jwtToken);
       setType(json.type);
       setName(json.name);
+
+      // set state calls are async. It takes some time to set the values
+      // in the same functions use the actual value instead of hook values
+      navigation.navigate('Dashboard', {
+        token: json.jwtToken,
+        type: json.type,
+        name: json.name,
+      })
       // }
       
     } catch (error) {
