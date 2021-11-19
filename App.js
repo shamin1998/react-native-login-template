@@ -4,11 +4,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { theme } from './src/core/theme'
 import {
-  //StartScreen,
+  PatientInfoScreen,
   LoginScreen,
   ChiefComplaintsScreen,
   GeneralExaminationsScreen,
-  Dashboard
+  Dashboard,
+  PrescriptionsScreen,
+  ErrorScreen,
 } from './src/screens'
 
 const Stack = createStackNavigator()
@@ -28,6 +30,9 @@ export default function App() {
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="ChiefComplaintsScreen" component={ChiefComplaintsScreen} />
           <Stack.Screen name="GeneralExaminationsScreen" component={GeneralExaminationsScreen} />
+          <Stack.Screen name="PatientInfoScreen" component={PatientInfoScreen} />
+          <Stack.Screen name="PrescriptionsScreen" component={PrescriptionsScreen} />
+          <Stack.Screen name="ErrorScreen" component={ErrorScreen} />
           
         </Stack.Navigator>
       </NavigationContainer>

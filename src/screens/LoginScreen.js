@@ -39,40 +39,48 @@ export default function LoginScreen({ navigation }) {
 
       const json = await response1.json()
 
-      const response2 = await fetch(
-        'https://csjitsi.iitkgp.ac.in/api/patient/get-details',
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + json.jwtToken,
-          },
-        }
-      )
+      if (response1.status != 200) {
+        navigation.navigate('ErrorScreen')
+      }
 
-      const complaintjson = await response2.json()
-
-      navigation.navigate('Dashboard', {
-        token: json.jwtToken,
-        type: json.type,
-        name: json.name,
-        details: complaintjson,
-        // generalExaminations: complaintjson['general-examinations'],
-        // patientInfo: complaintjson['patient-info'],
-        // prescriptions: complaintjson.prescriptions,
-        status: complaintjson.status,
-      })
+      else {
+        const response2 = await fetch(
+          'https://csjitsi.iitkgp.ac.in/api/patient/get-details',
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + json.jwtToken,
+            },
+          }
+        )
+  
+        const complaintjson = await response2.json()
+  
+        navigation.navigate('Dashboard', {
+          token: json.jwtToken,
+          type: json.type,
+          name: json.name,
+          details: complaintjson,
+          // generalExaminations: complaintjson['general-examinations'],
+          // patientInfo: complaintjson['patient-info'],
+          // prescriptions: complaintjson.prescriptions,
+          status: complaintjson.status,
+        })
+  
+      }
     } catch (error) {
       console.error(error)
     }
+      
   }
 
   return (
     <Background>
       {/* <BackButton goBack={navigation.goBack} /> */}
       <Logo />
-      <Header>Welcome back.</Header>
+      <Header>Enter Login Details</Header>
       <TextInput
         label="Email"
         returnKeyType="next"

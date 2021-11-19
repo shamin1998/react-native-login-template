@@ -4,6 +4,7 @@ import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
+import BackButton from '../components/BackButton'
 
 export default function Dashboard({ route, navigation }) {
   // this is a concept called Destructuring
@@ -46,6 +47,29 @@ export default function Dashboard({ route, navigation }) {
     })
   }
 
+  const viewPatientInfo = async () => {
+    
+    navigation.navigate('PatientInfoScreen', {
+      
+      info: details['patient-info'],
+      // patientInfo: complaintjson['patient-info'],
+      // prescriptions: complaintjson.prescriptions,
+      // status: status,
+    })
+  }
+
+  const viewPrescriptions = async () => {
+    
+    navigation.navigate('PrescriptionsScreen', {
+      
+      prescriptions: details['prescriptions'],
+      // patientInfo: complaintjson['patient-info'],
+      // prescriptions: complaintjson.prescriptions,
+      // status: status,
+    })
+  }
+  
+
 
   // return (
   //   <Background>
@@ -68,7 +92,7 @@ export default function Dashboard({ route, navigation }) {
 
   return (
     <Background>
-      {/* <BackButton goBack={navigation.goBack} /> */}
+      <BackButton goBack={navigation.goBack} />
       
       <Header>Tasks</Header>
       
@@ -78,6 +102,14 @@ export default function Dashboard({ route, navigation }) {
 
       <Button mode="contained" onPress={viewGeneralExaminations}>
         General Examinations
+      </Button>
+
+      <Button mode="contained" onPress={viewPatientInfo}>
+        Patient Info
+      </Button>
+
+      <Button mode="contained" onPress={viewPrescriptions}>
+        Prescriptions
       </Button>
       
     </Background>

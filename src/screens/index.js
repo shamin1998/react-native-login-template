@@ -1,5 +1,7 @@
-export { default as StartScreen } from './StartScreen'
+export { default as PatientInfoScreen } from './PatientInfoScreen'
 export { default as LoginScreen } from './LoginScreen'
 export { default as ChiefComplaintsScreen } from './ChiefComplaintsScreen'
 export { default as GeneralExaminationsScreen } from './GeneralExaminationsScreen'
 export { default as Dashboard } from './Dashboard'
+export { default as PrescriptionsScreen } from './PrescriptionsScreen'
+export { default as ErrorScreen } from './ErrorScreen'
