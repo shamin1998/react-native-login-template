@@ -20,68 +20,54 @@ export default function LoginScreen({ navigation }) {
   const [valid, setValid] = useState('')
   const [complaint, setComplaint] = useState('')
 
-  const fetchApiCall = async() => {
+  const fetchApiCall = async () => {
     try {
-      const response = await fetch("https://csjitsi.iitkgp.ac.in/api/user/login", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "username" : email.value,
-          "password" : password.value
-        })
-      });
-      // const status = await response.status;
-      const json = await response.json();
-      // setValid(status);
-      // if (valid == 200) {
-      setToken(json.jwtToken);
-      setType(json.type);
-      setName(json.name);
+      const response1 = await fetch(
+        'https://csjitsi.iitkgp.ac.in/api/user/login',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: email.value,
+            password: password.value,
+          }),
+        }
+      )
 
-      // set state calls are async. It takes some time to set the values
-      // in the same functions use the actual value instead of hook values
+      const json = await response1.json()
+
+      const response2 = await fetch(
+        'https://csjitsi.iitkgp.ac.in/api/patient/get-details',
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + json.jwtToken,
+          },
+        }
+      )
+
+      const complaintjson = await response2.json()
+
       navigation.navigate('Dashboard', {
         token: json.jwtToken,
         type: json.type,
         name: json.name,
+        chiefComplaints: complaintjson['chief-complaints'],
+        generalExaminations: complaintjson['general-examinations'],
+        patientInfo: complaintjson['patient-info'],
+        prescriptions: complaintjson.prescriptions,
+        status: complaintjson.status,
       })
-      // }
-      
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-    
-    // try {
-    //   const response = await fetch("https://csjitsi.iitkgp.ac.in/api/patient/get-details", {
-    //     method: 'GET',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json',
-    //       'Authorization' : 'Bearer '+JSON.stringify(token),
-    //     }
-        
-    //   });
-    //   // const status = await response.status;
-    //   const complaintjson = await response.json();
-    //   // setValid(status);
-    //   // if (valid == 200) {
-    //   setComplaint(complaintjson.chief-complaints);
-      
-    //   // }
-      
-    // } catch (error) {
-    //   console.error(error);
-    // }
-
-    // navigation.navigate('Dashboard',  {Token:token,Type:type,Name:name})
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: 'Dashboard' }],
-    //})
   }
+
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
