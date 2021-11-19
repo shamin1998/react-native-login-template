@@ -6,8 +6,8 @@ import { theme } from './src/core/theme'
 import {
   //StartScreen,
   LoginScreen,
-  //RegisterScreen,
-  //ResetPasswordScreen,
+  ChiefComplaintsScreen,
+  GeneralExaminationsScreen,
   Dashboard
 } from './src/screens'
 
@@ -26,6 +26,8 @@ export default function App() {
           
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="ChiefComplaintsScreen" component={ChiefComplaintsScreen} />
+          <Stack.Screen name="ChiefComplaintsScreen" component={GeneralExaminationsScreen} />
           
         </Stack.Navigator>
       </NavigationContainer>

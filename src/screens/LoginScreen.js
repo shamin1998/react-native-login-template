@@ -57,29 +57,15 @@ export default function LoginScreen({ navigation }) {
         token: json.jwtToken,
         type: json.type,
         name: json.name,
-        chiefComplaints: complaintjson['chief-complaints'],
-        generalExaminations: complaintjson['general-examinations'],
-        patientInfo: complaintjson['patient-info'],
-        prescriptions: complaintjson.prescriptions,
+        details: complaintjson,
+        // generalExaminations: complaintjson['general-examinations'],
+        // patientInfo: complaintjson['patient-info'],
+        // prescriptions: complaintjson.prescriptions,
         status: complaintjson.status,
       })
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const onLoginPressed = () => {
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
-      return
-    }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
   }
 
   return (
@@ -108,29 +94,23 @@ export default function LoginScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      <View style={styles.forgotPassword}>
+      {/* <View style={styles.forgotPassword}>
         <TouchableOpacity
           onPress={() => navigation.navigate('ResetPasswordScreen')}
         >
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <Button mode="contained" onPress={fetchApiCall}>
         Login
       </Button>
-      <View style={styles.row}>
+      {/* <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
-      </View>
-      <View>
-        {/* <Text>{valid}</Text> */}
-        <Text>{token}</Text>
-        <Text>{complaint}</Text>
-        {/* <Text>{type}</Text>
-        <Text>{name}</Text> */}
-      </View>
+      </View> */}
+      
     </Background>
   )
 }

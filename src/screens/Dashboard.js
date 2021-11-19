@@ -12,10 +12,7 @@ export default function Dashboard({ route, navigation }) {
     token,
     type,
     name,
-    chiefComplaints,
-    generalExaminations,
-    patientInfo,
-    prescriptions,
+    details,
     status,
   } = route.params
 
@@ -23,29 +20,67 @@ export default function Dashboard({ route, navigation }) {
     token,
     type,
     name,
-    chiefComplaints,
-    generalExaminations,
-    patientInfo,
-    prescriptions,
+    details,
     status
   )
 
+  const viewChiefComplaints = async () => {
+    
+    navigation.navigate('ChiefComplaintsScreen', {
+      
+      complaints: details['chief-complaints'],
+      // patientInfo: complaintjson['patient-info'],
+      // prescriptions: complaintjson.prescriptions,
+      // status: status,
+    })
+  }
+
+  const viewGeneralExaminations = async () => {
+    
+    navigation.navigate('GeneralExaminationsScreen', {
+      
+      exams: details['general-examinations'],
+      // patientInfo: complaintjson['patient-info'],
+      // prescriptions: complaintjson.prescriptions,
+      // status: status,
+    })
+  }
+
+
+  // return (
+  //   <Background>
+  //     <Logo />
+  //     <Header>Let’s start</Header>
+  //     <Paragraph>{JSON.stringify(chiefComplaints)}</Paragraph>
+  //     <Button
+  //       mode="outlined"
+  //       onPress={() =>
+  //         navigation.reset({
+  //           index: 0,
+  //           routes: [{ name: 'StartScreen' }],
+  //         })
+  //       }
+  //     >
+  //       Logout
+  //     </Button>
+  //   </Background>
+  // )
+
   return (
     <Background>
-      <Logo />
-      <Header>Let’s start</Header>
-      <Paragraph>itemId: {token}</Paragraph>
-      <Button
-        mode="outlined"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'StartScreen' }],
-          })
-        }
-      >
-        Logout
+      {/* <BackButton goBack={navigation.goBack} /> */}
+      
+      <Header>Tasks</Header>
+      
+      <Button mode="contained" onPress={viewChiefComplaints}>
+        View Chief Complaints
       </Button>
+
+      <Button mode="contained" onPress={viewGeneralExaminations}>
+        General Examinations
+      </Button>
+      
     </Background>
   )
+
 }
